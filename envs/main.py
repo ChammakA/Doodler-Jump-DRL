@@ -10,7 +10,12 @@ pygame.display.set_caption("Doodle Jump Clone")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Arial", 40)
 
-#Colors
+#Sound Effects
+jump_sound = pygame.mixer.Sound("Jump_Sound.mp3")
+pygame.mixer.music.load("Background_Music.mp3")
+pygame.mixer.music.play(-1)  # Loop indefinitely
+
+#Colours
 PINK = (255, 192, 203)
 GREEN = (0, 255, 0)
 WHITE = (255, 255, 255)
@@ -28,6 +33,11 @@ class Doodler:
     
     def show(self):
         pygame.draw.ellipse(screen, PINK, (self.x, self.y, self.width, self.height))
+
+        if self.x < 0:
+            pygame.draw.ellipse(screen, PINK, (WIDTH + self.x, self.y, self.width, self.height))
+        elif (self.x + self.width > WIDTH):
+            pygame.draw.ellipse(screen, PINK, (self.x - WIDTH, self.y, self.width, self.height))
     
     def lands(self, platform):
         if (self.dy > 0):
@@ -37,10 +47,11 @@ class Doodler:
         return False
     
     def jump(self):
-        self.dy = -20
+        self.dy = -23
+        jump_sound.play()
     
     def move(self):
-        self.dy += 1
+        self.dy += 0.8
         self.y += self.dy
         self.x += self.dx
 
@@ -50,31 +61,58 @@ class Doodler:
             self.x = WIDTH
         
 class Platform:
-    def __init__(self, x, y):
+    def __init__(self, x, y, width=100, height=20, colour=GREEN):
         self.x = x
         self.y = y
-        self.width = 100
-        self.height = 20
+        self.width = width
+        self.height = height
+        self.colour = colour
+
     
     def show(self):
         pygame.draw.rect(screen, GREEN, (self.x, self.y, self.width, self.height))
     
-    # def move(self, dy):
-    #     self.y += dy
+    def update(self, dy):
+        self.y += dy
+    
+class MovingPlatform(Platform):
+    def __init__(self, x, y):
+        super().__init__(x, y, colour=(0, 200, 255))
+        self.speed = random.choice([-2, 2])
+
+    def update(self, dy):
+        super().update(dy)
+        self.x += self.speed
+        if self.x <= 0 or self.x + self.width >= WIDTH:
+            self.speed *= -1
+
+class BreakablePlatform(Platform):
+    def __init__(self, x, y):
+        super().__init__(x, y, colour=(255, 0, 0))
+        self.broken = False
+
+    def show(self):
+        if not self.broken:
+            super().show()
+    
+    def break_platform(self):
+        self.broken = True
 
 doodler = Doodler()
 platforms = [
     Platform(WIDTH//2, HEIGHT - 30),
-    Platform(WIDTH//3*2, HEIGHT//5*1),
+    MovingPlatform(WIDTH//3*2, HEIGHT//5*1),
     Platform(WIDTH//4*1, HEIGHT//5*2),
-    Platform(WIDTH//3*1, HEIGHT//5*3),
+    BreakablePlatform(WIDTH//3*1, HEIGHT//5*3),
     Platform(WIDTH//4*2, HEIGHT//5*4)
 ]
 
 running = True
 while running:
     clock.tick(FPS)
-    screen.fill(BLACK)
+    screen.fill((10, 10, 30))
+    for i in range(30):
+        pygame.draw.circle(screen, (200, 200, 255), (random.randint(0, WIDTH), random.randint(0, HEIGHT)), 2)
 
 
     # Event Handling
@@ -82,13 +120,15 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
+    MOVE_SPEED = 8 # hortizontal move speed
+
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        doodler.dx = -5
+        doodler.dx = -MOVE_SPEED
     elif keys[pygame.K_RIGHT]:
-        doodler.dx = 5
+        doodler.dx = MOVE_SPEED
     else:
-        doodler.dx = 0
+        doodler.dx *= 0.9  # friction effect
 
     # Game Logic
     for platform in platforms:
@@ -96,15 +136,22 @@ while running:
             doodler.jump()
             break
     
+    # gravity = 1 + (doodler.score / 100)
+    # doodler.dy += gravity / 2
+
+
     doodler.move()
 
     if doodler.y < HEIGHT // 2 and doodler.dy < 0:
+        scroll = min(-doodler.dy, 15)
         for platform in platforms:
-            platform.y -= doodler.dy
+            platform.y += scroll
             if platform.y > HEIGHT:
-                platform.x = random.randint(0, WIDTH - 100)
-                platform.y = random.randint(-50, 0)
+                platform.y = random.randint(0, WIDTH - platform.width)
+                platform.x = random.randint(-50, 0)
                 doodler.score += 1
+    
+    
     
 
     # draw everything
