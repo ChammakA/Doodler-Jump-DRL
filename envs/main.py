@@ -1,7 +1,7 @@
 import pygame
 import random
 
-WIDTH, HEIGHT = 800, 600
+WIDTH, HEIGHT = 500, 600
 FPS = 60
 
 pygame.init()
@@ -41,17 +41,17 @@ class Doodler:
     
     def lands(self, platform):
         if (self.dy > 0):
-            if (self.x + self.width/4 >= platform.x) and (self.x + self.width/4 <= platform.x + platform.width):
+            if (self.x + self.width * 0.2 < platform.x + platform.width) and (self.x + self.width * 0.8 > platform.x):
                 if (self.y + self.height >= platform.y) and (self.y + self.height <= platform.y + platform.height):
                     return True
         return False
     
     def jump(self):
-        self.dy = -23
+        self.dy = -18
         jump_sound.play()
     
     def move(self):
-        self.dy += 0.8
+        self.dy += 1.0
         self.y += self.dy
         self.x += self.dx
 
@@ -61,10 +61,11 @@ class Doodler:
             self.x = WIDTH
         
 class Platform:
-    def __init__(self, x, y, width=100, height=20, colour=GREEN):
+    def __init__(self, x, y, width=None, height=20, colour=GREEN):
         self.x = x
         self.y = y
-        self.width = width
+        if width is None:
+            self.width = random.randint(70, 120)
         self.height = height
         self.colour = colour
 
@@ -99,20 +100,29 @@ class BreakablePlatform(Platform):
         self.broken = True
 
 doodler = Doodler()
-platforms = [
-    Platform(WIDTH//2, HEIGHT - 30),
-    MovingPlatform(WIDTH//3*2, HEIGHT//5*1),
-    Platform(WIDTH//4*1, HEIGHT//5*2),
-    BreakablePlatform(WIDTH//3*1, HEIGHT//5*3),
-    Platform(WIDTH//4*2, HEIGHT//5*4)
-]
+platforms = []
+
+starting_platform = Platform(WIDTH // 2 - 50, HEIGHT - 30)
+platforms.append(starting_platform)
+
+start_y = HEIGHT - 100
+while start_y > -HEIGHT:
+    x = random.randint(0, WIDTH - 100)
+    if (abs(x - starting_platform.x) > 80) or (abs(start_y - starting_platform.y) > 50):
+        platforms.append(Platform(x, start_y))
+    start_y -= random.randint(80, 120)
+
+max_platform = HEIGHT
+highest_platform = HEIGHT
 
 running = True
 while running:
     clock.tick(FPS)
-    screen.fill((10, 10, 30))
-    for i in range(30):
-        pygame.draw.circle(screen, (200, 200, 255), (random.randint(0, WIDTH), random.randint(0, HEIGHT)), 2)
+    for i in range(HEIGHT):
+        color = (10, 10, 30 + i // 4)
+        pygame.draw.line(screen, color, (0, i), (WIDTH, i))
+    for i in range(15):
+        pygame.draw.circle(screen, (180, 180, 255), (random.randint(0, WIDTH), random.randint(0, HEIGHT)), 1)
 
 
     # Event Handling
@@ -134,22 +144,53 @@ while running:
     for platform in platforms:
         if doodler.lands(platform):
             doodler.jump()
+            
+            if (platform.y < highest_platform):
+                doodler.score += 1
+                highest_platform = platform.y
             break
     
-    # gravity = 1 + (doodler.score / 100)
-    # doodler.dy += gravity / 2
-
-
     doodler.move()
 
     if doodler.y < HEIGHT // 2 and doodler.dy < 0:
-        scroll = min(-doodler.dy, 15)
+        scroll = min(-doodler.dy, 10)
+        
         for platform in platforms:
             platform.y += scroll
-            if platform.y > HEIGHT:
-                platform.y = random.randint(0, WIDTH - platform.width)
-                platform.x = random.randint(-50, 0)
-                doodler.score += 1
+
+        max_platform = min(platform.y for platform in platforms)
+        vertical_gap = 80
+        if max_platform > 0:
+            new_y = max_platform - vertical_gap
+            attempts = 0
+            while True:
+                new_x = random.randint(0, WIDTH - 100)
+                if all(abs(new_x - platform.x) > 80 for platform in platforms if abs(platform.y - new_y) < 10):
+                    break
+                attempts += 1
+                if attempts > 10:  # prevent infinite loop
+                    break
+                
+
+            platform_type = random.choices(
+                [Platform, MovingPlatform, BreakablePlatform],
+                weights=[0.6, 0.25, 0.15],
+            )[0]
+
+            if platform_type == Platform:
+                new_platform = Platform(new_x, new_y)
+            elif platform_type == MovingPlatform:
+                new_platform = MovingPlatform(new_x, new_y)
+            else:
+                new_platform = BreakablePlatform(new_x, new_y)
+
+            platforms.append(new_platform)
+            
+        platforms = [p for p in platforms if p.y < HEIGHT + 40]
+    
+    if doodler.score % 10 == 0 and doodler.score != 0:
+        MOVE_SPEED = 8 + doodler.score // 20
+        GRAVITY = 0.8 + doodler.score / 200
     
     
     
@@ -163,7 +204,7 @@ while running:
     screen.blit(score_text, (10, 10))
 
     # game over condition
-    if doodler.y > HEIGHT:
+    if doodler.y + doodler.height > HEIGHT:
         game_over_text = font.render("Game Over!", True, WHITE)
         screen.blit(game_over_text, (50, HEIGHT // 2))
         pygame.display.flip()
