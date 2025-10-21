@@ -27,9 +27,9 @@ project_root/
 │
 ├─ configs/            # YAML configs for algorithms, rewards, seeds, personas
 ├─ notebooks/          # Analysis & visualization notebooks
+     ├─ plots/              # Generated plots (reward curves, score distributions, etc.)
 ├─ models/             # Saved models
-├─ logs/               # Training and evaluation logs
-├─ plots/              # Generated plots (reward curves, score distributions, etc.)
+├─ logs/               # Training and evaluation logs 
 └─ README.md
 
 ````
