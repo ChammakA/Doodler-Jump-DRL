@@ -227,6 +227,9 @@ The evaluation script logs the following metrics to CSV:
 * ✅ All metrics are saved in machine-readable formats (CSV)
 * ✅ The environment is fully Gymnasium-compatible and supports headless training
 * ✅ Can be extended to new reward functions or action spaces with minimal changes
+* ❌ Training is insufficient and agent doesn't consistently progress
+* ❌ Agent doesn't learn and follows the same patterns each episode
+* ❌ Inconsistencies and false graphs are due to agent training failure
 
 ---
 
