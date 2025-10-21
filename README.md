@@ -191,11 +191,11 @@ The evaluation script logs the following metrics to CSV:
 ## Analysis & Plots
 
 * **Learning Curves:** Reward vs. Timesteps
- ![Rewards](notebooks/reward_curve.png)
+ ![Rewards](notebooks/plots/reward_curve.png)
 * **Score Distributions:** Histogram of scores across episodes
- ![Score](notebooks/score_distribution.png)
+ ![Score](notebooks/plots/score_distribution.png)
 * **Death Analysis:** Episodes to failure / time alive
- ![Deaths](notebooks/death_vs_time_alive.png)
+ ![Deaths](notebooks/plots/death_vs_time_alive.png)
 
 ---
 
