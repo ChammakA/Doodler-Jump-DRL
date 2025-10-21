@@ -1,18 +1,22 @@
+import os
 import pygame
 import random
+
+ASSET_DIR = os.path.dirname(__file__)
 
 WIDTH, HEIGHT = 500, 600
 FPS = 60
 
 pygame.init()
+pygame.mixer.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Doodle Jump Clone")
 clock = pygame.time.Clock()
 font = pygame.font.SysFont("Arial", 40)
 
 #Sound Effects
-jump_sound = pygame.mixer.Sound("Jump_Sound.mp3")
-pygame.mixer.music.load("Background_Music.mp3")
+jump_sound = pygame.mixer.Sound(os.path.join(ASSET_DIR, "Jump_Sound.mp3"))
+pygame.mixer.music.load(os.path.join(ASSET_DIR, "Background_Music.mp3"))
 pygame.mixer.music.play(-1)  # Loop indefinitely
 
 #Colours
