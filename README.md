@@ -4,6 +4,13 @@ This repository implements a **custom Gymnasium-compatible environment** based o
 
 ---
 
+## Contributors
+
+| Name             | Role / Contribution                  |
+|------------------|-------------------------------------|
+| **Sammak Ahmed** | Lead Developer |
+| **Hailey D'Souza** | Developer |
+
 ## Project Structure
 
 ```
@@ -37,12 +44,6 @@ project_root/
 ```bash
 pip install -r requirements.txt
 ````
-
-(Optional) For GPU training with PyTorch:
-
-```bash
-pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
-```
 
 ---
 
