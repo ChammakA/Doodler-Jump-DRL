@@ -191,11 +191,17 @@ The evaluation script logs the following metrics to CSV:
 ## Analysis & Plots
 
 * **Learning Curves:** Reward vs. Timesteps
-<img src="notebooks/plots/reward_curve.png" width="500"/>
+<p align="center">
+  <img src="notebooks/plots/reward_curve.png" width="500" style="margin: 20px 0;">
+</p>
 * **Score Distributions:** Histogram of scores across episodes
-<img src="notebooks/plots/score_distribution.png" width="500"/>
+<p align="center">
+  <img src="notebooks/plots/score_distribution.png" width="500" style="margin: 20px 0;">
+</p>
 * **Death Analysis:** Episodes to failure / time alive
-<img src="notebooks/plots/death_vs_time_alive.png" width="500"/>
+<p align="center">
+  <img src="notebooks/plots/death_vs_time_alive.png" width="500" style="margin: 20px 0;">
+</p>
 
 ---
 
@@ -210,12 +216,16 @@ The evaluation script logs the following metrics to CSV:
 
 ## Demo & Media
 
-**PPO in Aggressive Reward Mode:**
-<img src="outputs/PPO_Aggressive.gif" width="350"/>
-**DQN in Aggressive Reward Mode:**
-<img src="outputs/DQN_Aggressive.gif" width="350"/>
-**Human Player:**
-<img src="outputs/Human_Player.gif" width="350"/>
+### PPO vs DQN (Aggressive Persona)
+<p align="center">
+  <img src="outputs/PPO_Aggressive.gif" width="300" style="margin: 10px;">
+  <img src="outputs/DQN_Aggressive.gif" width="300" style="margin: 10px;">
+</p>
+
+### Human Player (Baseline)
+<p align="center">
+  <img src="outputs/Human_Player.gif" width="350" style="margin: 20px;">
+</p>
 
 
 ---
