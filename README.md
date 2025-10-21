@@ -205,6 +205,21 @@ The evaluation script logs the following metrics to CSV:
 
 ---
 
+## Reproduction Steps
+
+To reproduce the reported results:
+
+```bash
+# Train 3 models with different personas or algorithms
+python src/train_doodler.py --algo ppo --reward_persona aggressive
+python src/train_doodler.py --algo dqn --reward_persona aggressive
+
+# Evaluate all trained models
+python src/eval_doodler.py --algo ppo --model_path models/doodler/ppo_aggressive_final.zip
+python src/eval_doodler.py --algo dqn --model_path models/doodler/dqn_survivor_final.zip
+
+```
+
 ## Artifacts
 
 * **Models:** `models/` – Saved PPO and DQN checkpoints
