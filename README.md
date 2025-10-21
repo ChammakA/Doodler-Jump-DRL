@@ -191,9 +191,11 @@ The evaluation script logs the following metrics to CSV:
 ## Analysis & Plots
 
 * **Learning Curves:** Reward vs. Timesteps
+ ![Rewards](notebooks/reward_curve.png)
 * **Score Distributions:** Histogram of scores across episodes
+ ![Score](notebooks/score_distribution.png)
 * **Death Analysis:** Episodes to failure / time alive
-* **Persona Comparisons:** Heatmaps of `(x, y)` positions
+ ![Deaths](notebooks/death_vs_time_alive.png)
 
 ---
 
@@ -208,7 +210,12 @@ The evaluation script logs the following metrics to CSV:
 
 ## Demo & Media
 
-Short Clips of Models and Human Gameplay
+**PPO in Aggressive Reward Mode:**
+![PPO](outputs/PPO_Aggressive.gif)
+**DQN in Aggressive Reward Mode:**
+![DQN](outputs/DQN_Aggressive.gif)
+**Human Player:**
+![Human](outputs/Human_Player.gif)
 
 
 ---
