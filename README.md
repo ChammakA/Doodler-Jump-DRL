@@ -201,10 +201,12 @@ The evaluation script logs the following metrics to CSV:
 <p align="center">
   <img src="notebooks/plots/reward_curve.png" width="500" style="margin: 20px 0;">
 </p>
+
 * **Score Distributions:** Histogram of scores across episodes
 <p align="center">
   <img src="notebooks/plots/score_distribution.png" width="500" style="margin: 20px 0;">
 </p>
+
 * **Death Analysis:** Episodes to failure / time alive
 <p align="center">
   <img src="notebooks/plots/death_vs_time_alive.png" width="500" style="margin: 20px 0;">
