@@ -1,0 +1,22 @@
+# Core environment & RL libraries
+gymnasium==0.29.1
+pygame==2.5.2
+numpy==1.26.4
+stable-baselines3==2.3.0
+
+# Logging, analysis, and visualization
+tensorboard==2.17.0
+matplotlib==3.9.2
+pandas==2.2.3
+seaborn==0.13.2
+
+# Experiment configuration
+hydra-core==1.3.2
+omegaconf==2.3.0
+
+# Optional: Jupyter notebooks for analysis
+jupyter==1.0.0
+notebook==7.2.2
+
+# Miscellaneous utilities
+tqdm==4.66.5
