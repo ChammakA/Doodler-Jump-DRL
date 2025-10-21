@@ -5,10 +5,11 @@ This repository implements a **custom Gymnasium-compatible environment** based o
 ---
 
 ## Contributors
-**Sammak Ahmed**
-**Hailey D'Souza**
 
----
+| Name             | Role / Contribution                  |
+|------------------|-------------------------------------|
+| **Sammak Ahmed** | Lead Developer |
+| **Hailey D'Souza** | Developer |
 
 ## Project Structure
 
