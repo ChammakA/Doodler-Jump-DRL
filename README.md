@@ -6,10 +6,11 @@ This repository implements a **custom Gymnasium-compatible environment** based o
 
 ## Contributors
 
-| Name             | Role / Contribution                  |
-|------------------|-------------------------------------|
-| **Sammak Ahmed** | Lead Developer |
-| **Hailey D'Souza** | Developer |
+| Name              | Role / Contribution                                                       | Links |
+|-------------------|---------------------------------------------------------------------------|--------|
+| **Sammak Ahmed**  | Lead Developer — implemented core functionality, AI integration, and testing pipeline | [GitHub (ChammakA)](https://github.com/ChammakA/Doodler-Jump-DRL) |
+| **Hailey D'Souza**| Developer — created and refined Webflow front-end design and interactions | [GitHub (Hailey’s Webflow Repository)](https://github.com/HaileyDsouza/WebFlow-DRL) |
+
 
 ## Project Structure
 
